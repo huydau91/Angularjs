@@ -1,0 +1,150 @@
+<div class="container" ng-controller="homecontroller">
+	<div style="text-align: center; margin: 3rem 0; font-size: 2rem;">
+		<a ui-sref="route">Route</a>
+		<span ng-click="statego()" style="cursor: pointer;">state.go</span>
+	</div>
+	<div class="menu" style="margin-bottom: 2rem;">
+		<input id="search_key" type="text" placeholder="Search name" ng-model="key_name">
+		<button ng-click="search()">Search</button>
+		<button ng-click="addUser()" style="float: right;">Add user</button>
+	</div>
+
+	<table class="table">
+		<tr>
+			<td><span>No.</span></td>
+			<td ng-click="sortBy('Name')"><span>Name</span></td>
+			<td ng-click="sortBy('Age')"><span>Age</span></td>
+			<td ng-click="sortBy('Gender')"><span>Gender</span></td>
+			<td ng-click="sortBy('City')"><span>City</span></td>
+			<td ng-click="sortBy('Country')"><span>Country</span></td>
+			<td><span></span></td>
+		</tr>
+		<tr ng-repeat="user in users | orderBy:propertyName:reverse"> <!-- | filter: {Name:key_name} -->
+			<td><span>{{ $index +1 }}</span></td>
+			<td ng-click="viewUser($index)"><span>{{ user.Name }}</span></td>
+			<td><span>{{ user.Age }}</span></td>
+			<td><span>{{ user.Gender }}</span></td>
+			<td><span>{{ user.City }}</span></td>
+			<td><span>{{ user.Country }}</span></td>
+			<td class="action">
+				<i data-toggle="modal" class="fa fa-pencil-square-o" ng-click="editUser($index)"></i>
+				<i data-toggle="modal" class="fa fa-trash-o" ng-click="deleteUser($index)"></i>
+			</td>
+		</tr>
+	</table>
+
+	<!-- ViewUser -->
+	<div id="tagViewUser" class="modal fade" role="dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<h3 class="modal-title">Detail User</h3>
+				<p><b>Name:</b> {{ detailUser.Name }}</p>
+				<p><b>Age:</b> {{ detailUser.Age }}</p>
+				<p><b>Gender:</b> {{ detailUser.Gender }}</p>
+				<p><b>City:</b> {{ detailUser.City }}</p>
+				<p><b>Country:</b> {{ detailUser.Country }}</p>
+			</div>
+		</div>
+	</div>
+	<!-- End ViewUser -->
+
+	<!-- EditUser -->
+	<div id="tagEditUser" class="modal fade" role="dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<form id="formEditUser" name="formEditUser" ng-submit="saveEditUser()">
+					<h3 class="modal-title">Update User</h3>
+					<label>Name</label>
+					<input ng-model="info.Name" type="text" ng-minlength="2" ng-maxlength="20" required>
+					<p ng-show="!info.Name"><i>Please insert name, from 2-20 characters</i></p>
+
+					<label>Age</label>
+					<select name="editage" ng-model="info.Age" ng-options="x for x in ages" required></select>
+					<p ng-show="!info.Age"><i>Please insert age, range from 10-100</i></p>
+					<!-- <input ng-model="info.Age" min="10" max="100" type="number" required>
+					<p ng-show="!info.Age"><i>Please insert age, range from 10-100</i></p> -->
+
+					<label>Gender</label>
+					<!-- <input ng-model= "info.Gender" type="text" required> -->
+					<select name="editgender" ng-model="info.Gender" ng-options="x for x in gender" required></select>
+					<p ng-show="!info.Gender"><i>Please insert gender</i></p>
+
+					<label>City</label>
+					<input ng-model= "info.City" type="text" required>
+					<p ng-show="!info.City"><i>Please insert city</i></p>
+
+					<label>Country</label>
+					<input ng-model= "info.Country" type="text" required>
+					<p ng-show="!info.Country"><i>Please insert country</i></p>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" form="formEditUser" class="btn btn-default actived" ng-disabled="formEditUser.$invalid">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+	<!-- End EditUser -->
+
+	<!-- addUser -->
+	<div id="tagAddUser" class="modal fade" role="dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<form id="formAddUser" name="formAddUser" ng-submit="saveAddUser()">
+					<h3 class="modal-title">New User</h3>
+					<label>Name</label>
+					<input name="newname" type="text" ng-minlength="2" ng-maxlength="20" ng-model="addUser_name" required>
+					<p ng-show="!addUser_name && formAddUser.newname.$touched"><i>Please insert name, from 2-20 characters</i></p>
+
+					<label>Age</label>
+					<!-- <input name="newage" min="10" max="100" ng-model="addUser_age" required> -->
+					<select name="newage" ng-model="addUser_age" ng-options="x for x in ages" required></select>
+					<p ng-show="!addUser_age && formAddUser.newage.$touched"><i>Please insert age, range from 10-100</i></p>
+
+					<label>Gender</label>
+					<!-- <input name="newgender" type="text" ng-model="addUser_gender" required> -->
+					<select name="newgender" ng-model="addUser_gender" ng-options="x for x in gender" required></select>
+					<p ng-show="!addUser_gender && formAddUser.newgender.$touched"><i>Please insert gender</i></p>
+
+					<label>City</label>
+					<input name="newcity" type="text" ng-model="addUser_city" required>
+					<p ng-show="!addUser_city && formAddUser.newcity.$touched"><i>Please insert city</i></p>
+
+					<label>Country</label>
+					<input name="newcountry" type="text" ng-model="addUser_country" required>
+					<p ng-show="!addUser_country && formAddUser.newcountry.$touched"><i>Please insert country</i></p>
+
+					<label>Year</label>
+					<select>
+						<option ng-repeat="x in years">{{x}}</option>
+					</select>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" form="formAddUser" class="btn btn-default actived" ng-disabled="formAddUser.$invalid">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+
+		</div>
+	</div>
+	<!-- End addUser -->
+
+	<!-- Delete Confirm -->
+	<div id="tagDeleteUser" class="modal fade" role="dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4 class="modal-title">Warning</h4>
+				<p style="text-align: center;">Are you sure want to delete this user?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-click="confirmDeleteUser()">Delete</button>
+				<button type="button" class="btn btn-default actived" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+	<!-- End Delete Confirm -->
+</div>
