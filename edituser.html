@@ -1,0 +1,38 @@
+<div class="container" ng-controller="edituserController">
+	<div id="tagEditUser">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<form id="formEditUser" name="formEditUser" ng-submit="saveEditUser()">
+					<h3 class="modal-title">Update User</h3>
+					<label>Name</label>
+					<input ng-model="info.Name" type="text" ng-minlength="2" ng-maxlength="30" required>
+					<p ng-show="!info.Name"><i>Please insert name, from 2-30 characters</i></p>
+
+					<label>Age</label>
+					<select name="editage" ng-model="info.Age" ng-options="x for x in ages" required></select>
+					<p ng-show="!info.Age"><i>Please insert age, range from 10-100</i></p>
+					<!-- <input ng-model="info.Age" min="10" max="100" type="number" required>
+					<p ng-show="!info.Age"><i>Please insert age, range from 10-100</i></p> -->
+
+					<label>Gender</label>
+					<!-- <input ng-model= "info.Gender" type="text" required> -->
+					<select name="editgender" ng-model="info.Gender" ng-options="x for x in gender" required></select>
+					<p ng-show="!info.Gender"><i>Please insert gender</i></p>
+
+					<label>City</label>
+					<input ng-model= "info.City" type="text" required>
+					<p ng-show="!info.City"><i>Please insert city</i></p>
+
+					<label>Country</label>
+					<input ng-model= "info.Country" type="text" required>
+					<p ng-show="!info.Country"><i>Please insert country</i></p>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" form="formEditUser" class="btn btn-default actived" ng-disabled="formEditUser.$invalid">Save</button>
+				<button type="button" class="btn btn-default" ng-click="backhome()">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

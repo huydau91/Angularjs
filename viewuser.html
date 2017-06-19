@@ -1,0 +1,29 @@
+<div class='container' ng-controller='viewuserController'>
+	<!-- ViewUser -->
+	<div id="tagViewUser">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<h3 class="modal-title">Detail User</h3>
+				<label>Name</label>
+				<input value="{{ detailUser.Name }}" ng-readonly="true">
+
+				<label>Age</label>
+				<input value="{{ detailUser.Age }}"  ng-readonly="true">
+
+				<label>Gender</label>
+				<input value="{{ detailUser.Gender }}" ng-readonly="true">
+
+				<label>City</label>
+				<input value="{{ detailUser.City }}" ng-readonly="true">
+
+				<label>Country</label>
+				<input value="{{ detailUser.Country }}" ng-readonly="true">
+			</div>
+			
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-click="backhome()">Close</button>
+			</div>
+		</div>
+		<!-- End ViewUser -->
+	</div>

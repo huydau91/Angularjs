@@ -1,0 +1,51 @@
+<div class="container" ng-controller="homeController">
+	<div style="text-align: center; margin: 3rem 0; font-size: 2rem;">
+		<a ui-sref="route">Route</a>
+		<span ng-click="statego()" style="cursor: pointer;">state.go</span>
+	</div>
+	<div class="menu" style="margin-bottom: 2rem;">
+		<input id="search_key" type="text" placeholder="Search name" ng-model="key_name">
+		<button ng-click="search()">Search</button>
+		<button ng-click="addUser()" style="float: right;">Add user</button>
+	</div>
+
+	<table class="table">
+		<tr>
+			<td><span>No.</span></td>
+			<td ng-click="sortBy('Name')"><span>Name</span></td>
+			<td ng-click="sortBy('Age')"><span>Age</span></td>
+			<td ng-click="sortBy('Gender')"><span>Gender</span></td>
+			<td ng-click="sortBy('City')"><span>City</span></td>
+			<td ng-click="sortBy('Country')"><span>Country</span></td>
+			<td><span></span></td>
+		</tr>
+		<tr ng-repeat="user in users"> <!-- | filter: {Name:key_name}  | orderBy:propertyName:reverse-->
+			<td><span>{{ $index +1 }}</span></td>
+			<td ng-click="viewUser($index)"><span>{{ user.Name }}</span></td>
+			<td><span>{{ user.Age }}</span></td>
+			<td><span>{{ user.Gender }}</span></td>
+			<td><span>{{ user.City }}</span></td>
+			<td><span>{{ user.Country }}</span></td>
+			<td class="action">
+				<i data-toggle="modal" class="fa fa-pencil-square-o" ng-click="editUser($index)"></i>
+				<i data-toggle="modal" class="fa fa-trash-o" ng-click="deleteUser($index)"></i>
+			</td>
+		</tr>
+	</table>
+
+	<!-- Delete Confirm -->
+	<div id="tagDeleteUser" class="modal fade" role="dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4 class="modal-title">Warning</h4>
+				<p style="text-align: center;">Are you sure want to delete this user?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-click="confirmDeleteUser()">Delete</button>
+				<button type="button" class="btn btn-default actived" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+	<!-- End Delete Confirm -->
+</div>

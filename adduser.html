@@ -1,0 +1,41 @@
+<div class="container" ng-controller="adduserController">
+	<div id="tagAddUser">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<form id="formAddUser" name="formAddUser" ng-submit="saveAddUser()">
+					<h3 class="modal-title">New User</h3>
+					<label>Name</label>
+					<input name="newname" type="text" ng-minlength="2" ng-maxlength="30" ng-model="addUser_name" required>
+					<p ng-show="!addUser_name && formAddUser.newname.$touched"><i>Please insert name, from 2-30 characters</i></p>
+
+					<label>Age</label>
+					<!-- <input name="newage" min="10" max="100" ng-model="addUser_age" required> -->
+					<select name="newage" ng-model="addUser_age" ng-options="x for x in ages" required></select>
+					<p ng-show="!addUser_age && formAddUser.newage.$touched"><i>Please insert age, range from 10-100</i></p>
+
+					<label>Gender</label>
+					<!-- <input name="newgender" type="text" ng-model="addUser_gender" required> -->
+					<select name="newgender" ng-model="addUser_gender" ng-options="x for x in gender" required></select>
+					<p ng-show="!addUser_gender && formAddUser.newgender.$touched"><i>Please insert gender</i></p>
+
+					<label>City</label>
+					<input name="newcity" type="text" ng-model="addUser_city" required>
+					<p ng-show="!addUser_city && formAddUser.newcity.$touched"><i>Please insert city</i></p>
+
+					<label>Country</label>
+					<input name="newcountry" type="text" ng-model="addUser_country" required>
+					<p ng-show="!addUser_country && formAddUser.newcountry.$touched"><i>Please insert country</i></p>
+
+					<label>Date</label>
+					<input ng-readonly="true" value="{{year | date:'dd-MM-yyyy'}}">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" form="formAddUser" class="btn btn-default actived" ng-disabled="formAddUser.$invalid">Save</button>
+				<button type="button" class="btn btn-default" ng-click="backhome()">Close</button>
+			</div>
+
+		</div>
+	</div>
+</div>
